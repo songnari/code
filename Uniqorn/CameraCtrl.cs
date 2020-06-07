@@ -38,7 +38,6 @@ public class CameraCtrl : MonoBehaviour
     void LateUpdate()
     {
         TargetPosition();
-        FadeOutObject(); // 가리는 물체 투명하게
 
         if (StMgr.isTalk == true)
         {
@@ -49,31 +48,7 @@ public class CameraCtrl : MonoBehaviour
             TryZoomOut();
         }
     }
-
-    private void FadeOutObject()
-    {
-        Vector3 _dir = target.transform.position - transform.position;
-        Ray _ray = new Ray(transform.position, _dir);
-        Debug.DrawRay(transform.position, _dir, Color.red);
-
-        RaycastHit[] hits = Physics.RaycastAll(_ray);
-        GameObject[] _transparentWalls;
-        bool bFine = false;
-        foreach(RaycastHit hit in hits)
-        {
-            if(hit.collider.gameObject != target.gameObject && hit.collider.gameObject.tag != "Map")
-            {
-                bFine = false;
-                Debug.Log(hit.collider.gameObject.name);
-                hit.collider.gameObject.SetActive(false);
-            }
-            if (!bFine)
-            {
-                GameObject hitObject = hit.collider.gameObject;
-                //hitObject.GetComponent<MeshRenderer>().material.se = new Color(1f,1f,1f,0.1f);
-            }
-        }
-    }
+    
 
     private void TryZoomIn()
     {
